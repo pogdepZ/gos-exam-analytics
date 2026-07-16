@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Layout } from "./components/Layout";
 import { SearchPage } from "./pages/SearchPage";
+import { ReportsPage } from "./pages/ReportsPage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -11,14 +12,6 @@ const queryClient = new QueryClient({
     },
   },
 });
-
-// Placeholder components to ensure builds and routers resolve before subsequent features are added
-const ReportsPlaceholder = () => (
-  <div className="card text-center p-8">
-    <h2 className="text-xl font-bold mb-2">Score Distribution Reports</h2>
-    <p className="text-gray-400">Feature coming soon...</p>
-  </div>
-);
 
 const RankingsPlaceholder = () => (
   <div className="card text-center p-8">
@@ -34,7 +27,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<SearchPage />} />
-            <Route path="reports" element={<ReportsPlaceholder />} />
+            <Route path="reports" element={<ReportsPage />} />
             <Route path="rankings" element={<RankingsPlaceholder />} />
           </Route>
         </Routes>
