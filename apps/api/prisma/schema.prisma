@@ -1,0 +1,31 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model ExamResult {
+  id                  String   @id @default(uuid())
+  registrationNumber  String   @unique @map("registration_number")
+  math                Float?
+  literature          Float?
+  foreignLanguage     Float?   @map("foreign_language")
+  physics             Float?
+  chemistry           Float?
+  biology             Float?
+  history             Float?
+  geography           Float?
+  civicEducation      Float?   @map("civic_education")
+  foreignLanguageCode String?  @map("foreign_language_code")
+  createdAt           DateTime @default(now()) @map("created_at")
+  updatedAt           DateTime @updatedAt @map("updated_at")
+
+  @@index([registrationNumber])
+  @@index([math, physics, chemistry])
+  @@map("exam_results")
+}
