@@ -6,16 +6,20 @@ description: Guidelines for building NestJS REST APIs, validation using class-va
 # Backend API Skill
 
 ## Purpose
+
 This skill establishes standardized development practices for the NestJS API backend, emphasizing OOP subject domains, error handling, DTO validation, and optimal database query structures.
 
 ## Trigger Conditions
+
 Use this skill when:
+
 - Designing new NestJS modules, controllers, or services.
 - Writing validation rules, decorators, or exception filters.
 - Crafting queries for lookup, statistics/aggregation, or group ranking.
 - Defining response envelopes or contract schemas.
 
 ## Required Workflow
+
 1. **NestJS Architecture**: Separate logic into discrete modules (`ExamResultsModule`, `ReportsModule`, `RankingsModule`).
 2. **DTO Validation**: Every incoming request payload (params, query, body) must be modeled using DTO classes decorated with `class-validator` properties. Validate globally in NestJS using a validation pipe.
 3. **OOP Subject Domain**: Model subjects using a registry pattern. Avoid hardcoding subject names (like `'math'`, `'physics'`) directly in services. Use a `SubjectRegistry` that handles translations, metadata, database field mappings, and exam group eligibility.
@@ -27,18 +31,21 @@ Use this skill when:
    - Error format: `{ "error": { "code": "SOME_ERROR_CODE", "message": "Readable description" } }`
 
 ## Non-Negotiable Rules
+
 - **No Direct DB Calls in Controller**: Controllers must call services, services must query databases via Prisma.
 - **DTO Safety**: Always enable `whitelist: true` and `forbidNonWhitelisted: true` on `ValidationPipe` to filter out unsolicited request fields.
 - **Sanitize Error Stack**: Never return database exceptions or raw error stack traces to the frontend. Catch all unexpected exceptions and return a standard `500 Internal Server Error`.
 - **Subject OOP Registry**: Any subject-specific calculations (like score ranges or group requirements) must consult the `SubjectRegistry` instead of hardcoding conditions.
 
 ## Expected Outputs
+
 - Formatted NestJS modules, controllers, and services.
 - Data Transfer Objects (DTOs) with validation rules.
 - Object-Oriented Subject classes and registry.
 - Standardized error and response formats.
 
 ## Acceptance Checklist
+
 - [ ] DTO validations cover all route parameters and query strings.
 - [ ] Unknown registration numbers return a clear, contract-compliant 404 response.
 - [ ] Score distribution calculations use database-level aggregation.
@@ -48,6 +55,7 @@ Use this skill when:
 ## Relevant Examples
 
 ### OOP Subject Registry Design Example
+
 ```typescript
 export interface Subject {
   code: string;
@@ -61,9 +69,24 @@ export class SubjectRegistry {
   private readonly subjects = new Map<string, Subject>();
 
   constructor() {
-    this.register({ code: 'MATH', name: 'Mathematics', dbField: 'math', isGroupA: true });
-    this.register({ code: 'PHYS', name: 'Physics', dbField: 'physics', isGroupA: true });
-    this.register({ code: 'CHEM', name: 'Chemistry', dbField: 'chemistry', isGroupA: true });
+    this.register({
+      code: "MATH",
+      name: "Mathematics",
+      dbField: "math",
+      isGroupA: true,
+    });
+    this.register({
+      code: "PHYS",
+      name: "Physics",
+      dbField: "physics",
+      isGroupA: true,
+    });
+    this.register({
+      code: "CHEM",
+      name: "Chemistry",
+      dbField: "chemistry",
+      isGroupA: true,
+    });
     // Register remaining subjects...
   }
 
@@ -76,7 +99,7 @@ export class SubjectRegistry {
   }
 
   getGroupASubjects(): Subject[] {
-    return this.getSubjects().filter(s => s.isGroupA);
+    return this.getSubjects().filter((s) => s.isGroupA);
   }
 }
 ```
