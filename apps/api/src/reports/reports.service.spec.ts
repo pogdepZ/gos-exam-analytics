@@ -74,6 +74,32 @@ describe('ReportsService', () => {
       });
     });
 
+    it('should correctly handle BigInt return type from SQLite Prisma raw queries', async () => {
+      // Prisma with SQLite returns COUNT() results as JavaScript BigInt, not number.
+      // This test guards against regression where BigInt values were silently treated as 0.
+      const mockQueryResponse = [
+        {
+          math_GTE_8: BigInt(198392),
+          math_GTE_6_LT_8: BigInt(505836),
+          math_GTE_4_LT_6: BigInt(258654),
+          math_LT_4: BigInt(82731),
+        },
+      ];
+
+      mockPrismaService.$queryRawUnsafe.mockResolvedValue(mockQueryResponse);
+
+      const result = await service.getScoreDistribution();
+
+      const mathReport = result.find((r) => r.subject === 'math');
+      expect(mathReport).toBeDefined();
+      expect(mathReport?.levels).toEqual({
+        GTE_8: 198392,
+        GTE_6_LT_8: 505836,
+        GTE_4_LT_6: 258654,
+        LT_4: 82731,
+      });
+    });
+
     it('should return default counts when database query is empty', async () => {
       mockPrismaService.$queryRawUnsafe.mockResolvedValue([]);
 
