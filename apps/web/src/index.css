@@ -486,10 +486,18 @@ body {
 .table-responsive {
   width: 100%;
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Subtle scroll hint on mobile */
+.table-responsive::after {
+  content: '';
+  display: none;
 }
 
 .analytics-table {
   width: 100%;
+  min-width: 520px; /* Ensures horizontal scroll on small screens instead of collapsing */
   border-collapse: collapse;
   text-align: left;
 }
@@ -658,13 +666,13 @@ body {
     font-size: 26px;
   }
   
-  .analytics-table th:nth-child(3),
-  .analytics-table th:nth-child(4),
-  .analytics-table th:nth-child(5),
-  .analytics-table td:nth-child(3),
-  .analytics-table td:nth-child(4),
-  .analytics-table td:nth-child(5) {
-    display: none; /* Hide Math, Physics, Chemistry columns on mobile to fit nicely */
+  /* Table scrolls horizontally on mobile via min-width on .analytics-table + overflow-x: auto on .table-responsive.
+     No columns are hidden — all data remains accessible by swiping. */
+  .analytics-table th,
+  .analytics-table td {
+    padding: 12px 16px;
+    font-size: 13px;
+    white-space: nowrap;
   }
 
   .scores-grid {
