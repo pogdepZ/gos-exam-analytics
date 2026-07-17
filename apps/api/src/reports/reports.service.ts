@@ -68,6 +68,7 @@ export class ReportsService {
       const getCount = (suffix: string): number => {
         const val = result[`${dbField}_${suffix}`];
         if (typeof val === 'number') return val;
+        if (typeof val === 'bigint') return Number(val);
         if (typeof val === 'string') return parseInt(val, 10) || 0;
         return 0;
       };
