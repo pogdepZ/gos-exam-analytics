@@ -40,7 +40,9 @@ services:
       context: .
       dockerfile: apps/web/Dockerfile
       args:
-        - VITE_API_URL=http://localhost:3000
+        # Override with the public-facing API URL when deploying to a server:
+        # docker-compose build --build-arg VITE_API_URL=https://api.yourdomain.com
+        - VITE_API_URL=${VITE_API_URL:-http://localhost:3000}
     container_name: gos-exam-web
     restart: always
     ports:

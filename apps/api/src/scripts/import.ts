@@ -103,6 +103,7 @@ async function insertBatch(
   try {
     const result = await prisma.examResult.createMany({
       data: batch,
+      skipDuplicates: true,
     });
     const inserted = result.count;
     const duplicates = batch.length - inserted;
