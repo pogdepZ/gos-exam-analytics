@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link, Outlet, useLocation } from "react-router-dom";
 import {
   Search,
@@ -18,11 +18,6 @@ const NAV_ITEMS = [
 export const Layout = () => {
   const location = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
-
-  // Close sidebar whenever route changes
-  useEffect(() => {
-    setMenuOpen(false);
-  }, [location.pathname]);
 
   // Lock body scroll when sidebar is open
   useEffect(() => {
@@ -85,6 +80,7 @@ export const Layout = () => {
               key={to}
               to={to}
               className={`sidebar-nav-item ${isActive(to)}`}
+              onClick={() => setMenuOpen(false)}
             >
               <Icon size={20} />
               <span>{label}</span>

@@ -21,6 +21,11 @@ out/
 *.sln
 *.sw?
 
+# Local agent/tooling metadata
+.agents/
+.codex/
+skills/
+
 # Logs
 npm-debug.log*
 yarn-debug.log*

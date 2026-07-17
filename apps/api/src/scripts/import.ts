@@ -7,7 +7,10 @@ import { parseCsvLine, validateHeaders } from '../import/csv-parser.util';
 const BATCH_SIZE = 5000;
 
 export async function runImporter() {
-  const csvPath = path.resolve(__dirname, '../../../../data/diem_thi_thpt_2024.csv');
+  const csvPath = path.resolve(
+    __dirname,
+    '../../../../data/diem_thi_thpt_2024.csv',
+  );
   console.log(`Starting import from: ${csvPath}`);
 
   if (!fs.existsSync(csvPath)) {

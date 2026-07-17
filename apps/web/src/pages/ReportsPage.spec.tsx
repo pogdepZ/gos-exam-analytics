@@ -1,7 +1,8 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { ReportsPage } from "./ReportsPage";
-import { transformSubjectData, RawReportSubject } from "../utils/reports";
+import { transformSubjectData } from "../utils/reports";
+import type { RawReportSubject } from "../utils/reports";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const createTestQueryClient = () =>
