@@ -12,7 +12,8 @@ import {
 import { Loader2, AlertCircle, BarChart3, Table } from "lucide-react";
 import { useState } from "react";
 
-import { transformSubjectData, RawReportSubject } from "../utils/reports";
+import { transformSubjectData } from "../utils/reports";
+import type { RawReportSubject } from "../utils/reports";
 
 const fetchScoreDistribution = async (): Promise<RawReportSubject[]> => {
   const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:3000";
