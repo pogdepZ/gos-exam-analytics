@@ -18,8 +18,7 @@ RUN npm ci --omit=dev
 
 COPY --from=builder /app/apps/api/dist ./apps/api/dist
 COPY --from=builder /app/apps/api/prisma ./apps/api/prisma
-COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
-COPY --from=builder /app/node_modules/@prisma/client ./node_modules/@prisma/client
+RUN npm exec -w apps/api -- prisma generate
 
 ENV NODE_ENV=production
 USER node
