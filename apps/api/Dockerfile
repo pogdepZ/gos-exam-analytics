@@ -23,4 +23,4 @@ RUN npm exec -w apps/api -- prisma generate
 ENV NODE_ENV=production
 USER node
 EXPOSE 3000
-CMD ["node", "apps/api/dist/src/main.js"]
+CMD ["node", "apps/api/dist/main.js"]
