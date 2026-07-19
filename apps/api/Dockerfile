@@ -6,7 +6,7 @@ COPY apps/api/package*.json ./apps/api/
 RUN npm ci
 
 COPY apps/api ./apps/api
-RUN ./node_modules/.bin/prisma generate --schema=apps/api/prisma/schema.prisma
+RUN npm exec -w apps/api -- prisma generate
 RUN npm run build -w apps/api
 
 # Stage 2: Production runner
