@@ -4,10 +4,13 @@ import {
   Query,
   ParseIntPipe,
   DefaultValuePipe,
+  UseInterceptors,
 } from '@nestjs/common';
+import { CacheInterceptor } from '@nestjs/cache-manager';
 import { RankingsService } from './rankings.service';
 
 @Controller('rankings')
+@UseInterceptors(CacheInterceptor)
 export class RankingsController {
   constructor(private readonly rankingsService: RankingsService) {}
 

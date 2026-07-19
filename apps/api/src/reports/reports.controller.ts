@@ -1,7 +1,9 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, UseInterceptors } from '@nestjs/common';
+import { CacheInterceptor } from '@nestjs/cache-manager';
 import { ReportsService } from './reports.service';
 
 @Controller('reports')
+@UseInterceptors(CacheInterceptor)
 export class ReportsController {
   constructor(private readonly reportsService: ReportsService) {}
 
