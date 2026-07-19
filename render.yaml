@@ -1,0 +1,26 @@
+services:
+  # PostgreSQL Database
+  - type: pserv
+    name: gos-exam-db
+    plan: free
+    databaseName: gos_exam_analytics
+    databaseUser: postgres
+
+  # NestJS API
+  - type: web
+    name: gos-exam-api
+    plan: free
+    runtime: docker
+    dockerfilePath: ./apps/api/Dockerfile
+    dockerContext: .
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3000
+      - key: DATABASE_URL
+        fromDatabase:
+          name: gos-exam-db
+          property: connectionString
+      - key: FRONTEND_URL
+        sync: false  # Bạn điền thủ công URL Vercel sau khi deploy FE
