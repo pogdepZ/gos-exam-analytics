@@ -14,6 +14,19 @@ export class ExamResultsService {
 
     const record = await this.prisma.examResult.findUnique({
       where: { registrationNumber: paddedReg },
+      select: {
+        registrationNumber: true,
+        math: true,
+        literature: true,
+        foreignLanguage: true,
+        physics: true,
+        chemistry: true,
+        biology: true,
+        history: true,
+        geography: true,
+        civicEducation: true,
+        foreignLanguageCode: true,
+      },
     });
 
     if (!record) {
